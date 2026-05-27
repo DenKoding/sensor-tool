@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <title>Sensoren-Tracker</title>
     <link rel="stylesheet" href="style.css">
+	<meta charset="UTF-8">
+    <title>Sensoren-Tracker</title>
+	<!-- Service Worker Registrierung -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js');
+        }
+    </script>
 	<link rel="manifest" href="manifest.json">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -108,7 +114,7 @@
 
 <div id="scannerOverlay">
     <div id="scannerBox">
-        <video id="scannerVideo" autoplay></video>
+        <video id="scannerVideo" autoplay playsinline></video>
         <button id="closeScanner" onclick="closeScanner()">Schließen</button>
     </div>
 </div>
@@ -127,8 +133,43 @@
 <div id="sensorSummary" class="summary-box"></div>
 <div id="sensorList"></div>
 
+<!-- Bibliotheken -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script src="https://unpkg.com/@zxing/library@latest"></script>
 <script src="app.js"></script>
+
+<!-- Scanner-Logik -->
+<script>
+    let codeReader;
+
+    async function openScanner() {
+        document.getElementById("scannerOverlay").style.display = "flex";
+
+        const videoElem = document.getElementById("scannerVideo");
+        codeReader = new ZXing.BrowserMultiFormatReader();
+
+        try {
+            const devices = await ZXing.BrowserCodeReader.listVideoInputDevices();
+            const backCam = devices.find(d => d.label.toLowerCase().includes("back")) || devices[0];
+
+            await codeReader.decodeFromVideoDevice(backCam.deviceId, videoElem, (result, err) => {
+                if (result) {
+                    alert("Gefunden: " + result.text);
+                    closeScanner();
+                }
+            });
+
+        } catch (e) {
+            console.error(e);
+            alert("Kamera konnte nicht gestartet werden.");
+        }
+    }
+
+    function closeScanner() {
+        document.getElementById("scannerOverlay").style.display = "none";
+        if (codeReader) codeReader.reset();
+    }
+</script>
+
 </body>
 </html>
