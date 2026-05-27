@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Sensoren-Tracker</title>
+    <link rel="stylesheet" href="style.css">
+	<link rel="manifest" href="manifest.json">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="default">
+	<link rel="apple-touch-icon" href="icon.png">
+
+</head>
+<body>
+
+<div class="top-buttons">
+    <button onclick="triggerExcelImport()">Excel importieren</button>
+    <button onclick="triggerBackupImport()">Backup importieren</button>
+    <button onclick="backupExport()">Backup exportieren</button>
+	
+	<button onclick="clearAll()">Alle Daten löschen</button>
+
+    <input type="file" id="excelInput" accept=".xlsx,.xls" style="display:none" onchange="excelImport(event)">
+    <input type="file" id="backupInput" accept=".json" style="display:none" onchange="backupImport(event)">
+</div>
+
+<h1>Dexcom Sensorübersicht</h1>
+
+<div class="controls">
+    <label for="yearFilter">Jahr:</label>
+    <select id="yearFilter" onchange="renderSensors()">
+        <option value="all">Alle</option>
+    </select>
+	<select id="warningFilter" onchange="renderSensors()">
+    <option value="all">Alle</option>
+    <option value="warning">Defekte</option>
+	</select>
+</div>
+
+<form id="sensorForm">
+
+    <!-- Statusfelder (nur beim Bearbeiten sichtbar) -->
+    <div id="statusFields" class="statusfelder">
+        <div class="field">
+            <label>Reklamiert?</label>
+            <select id="reklamiert">
+                <option value="nein">Nein</option>
+                <option value="ja">Ja</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Erstattet?</label>
+            <select id="erstattet">
+                <option value="nein">Nein</option>
+                <option value="ja">Ja</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>Retoure an Dexcom?</label>
+            <select id="retour">
+                <option value="nein">Nein</option>
+                <option value="ja">Ja</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Normale Felder -->
+    <div class="form-grid">
+        <div class="field full-width">
+            <label>Einsatzdatum</label>
+            <input type="date" id="startDate" required>
+        </div>
+
+        <div class="field">
+            <label>LOT (10)</label>
+            <input type="text" id="lot">
+        </div>
+
+        <div class="field">
+            <label>Seriennummer (21)</label>
+            <input type="text" id="serial">
+        </div>
+
+        <div class="field">
+            <label>Produktionsnummer (01)</label>
+            <input type="text" id="prodNr">
+        </div>
+
+        <div class="field">
+            <label>Kopplungscode</label>
+            <input type="text" id="coupling">
+        </div>
+
+        <div class="field full-width">
+            <label>Bemerkungen</label>
+            <textarea id="notes" rows="2"></textarea>
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button type="button" onclick="addSensor()">Speichern</button>
+        <button type="button" onclick="openNewSensorForm()">Neu</button>
+    </div>
+</form>
+
+<button id="scanButton" onclick="openScanner()">Sensor scannen</button>
+
+<div id="scannerOverlay">
+    <div id="scannerBox">
+        <video id="scannerVideo" autoplay></video>
+        <button id="closeScanner" onclick="closeScanner()">Schließen</button>
+    </div>
+</div>
+
+<button id="uploadButton" onclick="triggerImageUpload()">Bild hochladen</button>
+<input type="file" id="imageInput" accept="image/*" style="display:none" onchange="decodeImage(event)">
+
+<div id="imageOverlay">
+    <div id="imageBox">
+        <img id="previewImage">
+        <button onclick="closeImageOverlay()">Schließen</button>
+    </div>
+</div>
+
+<hr>
+<div id="sensorSummary" class="summary-box"></div>
+<div id="sensorList"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script src="https://unpkg.com/@zxing/library@latest"></script>
+<script src="app.js"></script>
+</body>
+</html>
