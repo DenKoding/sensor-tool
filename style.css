@@ -1,0 +1,249 @@
+body {
+    font-family: system-ui, sans-serif;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 10px;
+}
+
+.top-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 20px;
+    margin-bottom: 10px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.statusfelder {
+    display: none;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #f7f7f7;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.sensor-entry {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+.sensor-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    padding: 6px 8px;
+    background: #f0f0f0;
+    cursor: pointer;
+    align-items: center;
+}
+
+.details {
+    display: none;
+    padding: 8px;
+    background: #fff;
+}
+
+.warning-row {
+    background: #ffcccc !important;   /* kräftiges Rot */
+    border-left: 6px solid #ff0000;   /* Warnstreifen */
+}
+
+#scanButton {
+    width: 100%;
+    padding: 4px;
+    font-size: 1.0rem;
+    margin: 15px 0;
+    cursor: pointer;
+}
+
+#scannerOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#scannerBox {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+#scannerVideo {
+    width: 90vw;
+    max-width: 500px;
+    border: 2px solid white;
+}
+
+#closeScanner {
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+#uploadButton {
+    width: 100%;
+    padding: 4px;
+    font-size: 1.0rem;
+    margin: 3px 0;
+    cursor: pointer;
+}
+
+#imageOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#imageBox {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.summary-box {
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #f2f2f2;
+    border-radius: 6px;
+    font-weight: 600;
+}
+	
+
+#previewImage {
+    max-width: 90vw;
+    max-height: 80vh;
+    border: 2px solid white;
+}
+
+/* Grundlayout */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: #f5f5f5;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    background: #007aff;
+    color: white;
+}
+
+/* Scanner Overlay */
+#scannerOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#scannerBox {
+    width: 90%;
+    max-width: 400px;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+#scannerVideo {
+    width: 100%;
+    height: auto;
+}
+
+/* Image Overlay */
+#imageOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#imageBox {
+    width: 90%;
+    max-width: 400px;
+    background: white;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+#previewImage {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* Sensorliste */
+.summary-box,
+#sensorList {
+    padding: 15px;
+    margin: 10px;
+    background: white;
+    border-radius: 10px;
+}
+
+/* Mobile Optimierung */
+@media (max-width: 600px) {
+    button {
+        font-size: 17px;
+        padding: 16px;
+    }
+
+    #scannerBox {
+        width: 95%;
+    }
+
+    #imageBox {
+        width: 95%;
+    }
+}
+
